@@ -1,0 +1,34 @@
+[remap]
+
+importer="texture"
+type="StreamTexture"
+path="res://.import/DB-Land-Coast-Animated.png-1e03e0d9a9f8f299a7f38e0cc688bd5b.stex"
+metadata={
+"vram_texture": false
+}
+
+[deps]
+
+source_file="res://assets/HAS Overworld 2.1/DirtBiome/Animated Tiles/DB-Land-Coast-Animated.png"
+dest_files=[ "res://.import/DB-Land-Coast-Animated.png-1e03e0d9a9f8f299a7f38e0cc688bd5b.stex" ]
+
+[params]
+
+compress/mode=0
+compress/lossy_quality=0.7
+compress/hdr_mode=0
+compress/bptc_ldr=0
+compress/normal_map=0
+flags/repeat=0
+flags/filter=false
+flags/mipmaps=false
+flags/anisotropic=false
+flags/srgb=2
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/HDR_as_SRGB=false
+process/invert_color=false
+stream=false
+size_limit=0
+detect_3d=false
+svg/scale=1.0

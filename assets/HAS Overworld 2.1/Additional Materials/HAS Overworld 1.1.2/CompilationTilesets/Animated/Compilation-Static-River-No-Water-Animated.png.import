@@ -1,0 +1,34 @@
+[remap]
+
+importer="texture"
+type="StreamTexture"
+path="res://.import/Compilation-Static-River-No-Water-Animated.png-0416b7a4fef504dfc9e42b74351ff32b.stex"
+metadata={
+"vram_texture": false
+}
+
+[deps]
+
+source_file="res://assets/HAS Overworld 2.1/Additional Materials/HAS Overworld 1.1.2/CompilationTilesets/Animated/Compilation-Static-River-No-Water-Animated.png"
+dest_files=[ "res://.import/Compilation-Static-River-No-Water-Animated.png-0416b7a4fef504dfc9e42b74351ff32b.stex" ]
+
+[params]
+
+compress/mode=0
+compress/lossy_quality=0.7
+compress/hdr_mode=0
+compress/bptc_ldr=0
+compress/normal_map=0
+flags/repeat=0
+flags/filter=false
+flags/mipmaps=false
+flags/anisotropic=false
+flags/srgb=2
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/HDR_as_SRGB=false
+process/invert_color=false
+stream=false
+size_limit=0
+detect_3d=false
+svg/scale=1.0
