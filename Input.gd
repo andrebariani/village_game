@@ -10,15 +10,8 @@ onready var camera = $Camera2D
 var zoom = true
 var scroll_multi = 1
 
-func _input(event):
-	
-	if event is InputEventMouseButton:
-		tilemapRoads.set_cellv(tilemapRoads.world_to_map(get_global_mouse_position()), 0)
-		#print_debug(tilemapRoads.tile_set.get_tiles_ids())
-	pass
-	
 
-func _process(delta):
+func _process(_delta):
 	
 	if Input.is_action_just_pressed("ui_select"):
 		toggle_zoom()

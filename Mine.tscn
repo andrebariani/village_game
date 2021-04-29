@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Building.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/HAS Buildings Pack/CompilationBuilding/Compilation-Building32x32.png" type="Texture" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+resource_local_to_scene = true
+extents = Vector2( 7, 7 )
+
+[node name="Mine" instance=ExtResource( 1 )]
+
+[node name="Sprite" parent="." index="0"]
+texture = ExtResource( 2 )
+region_rect = Rect2( 64, 128, 32, 32 )
+
+[node name="CollisionShape2D" parent="Area2D" index="0"]
+shape = SubResource( 1 )
