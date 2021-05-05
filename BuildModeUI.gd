@@ -15,10 +15,16 @@ func _ready():
 
 func _process(_delta):
 	if selected_tile:
-		if Input.is_action_pressed("ui_accept"):
-			if selected_tile.tile_name == "Road":
+		if selected_tile.tile_name == "Road":
+			if Input.is_action_pressed("ui_accept"):
 				var clicked_cell = roadMap.world_to_map(get_global_mouse_position())
-				roadMap.set_cellv(clicked_cell, 0)
+				print_debug(clicked_cell)
+				roadMap.set_cellv(clicked_cell, 1)
+				roadMap.update_bitmask_area(clicked_cell)
+			if Input.is_action_pressed("delete"):
+				var clicked_cell = roadMap.world_to_map(get_global_mouse_position())
+				print_debug(clicked_cell)
+				roadMap.set_cellv(clicked_cell, -1)
 				roadMap.update_bitmask_area(clicked_cell)
 
 
