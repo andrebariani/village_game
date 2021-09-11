@@ -2,6 +2,12 @@ extends Node2D
 class_name Building
 
 onready var map = get_parent()
+onready var icon = $Sprite
+onready var ui = get_tree().get_nodes_in_group("MainUI")[0]
+
+
+export var title = "title"
+export var desc = "desc"
 
 signal placed()
 
@@ -30,3 +36,9 @@ func _process(_delta):
 		MODE.PLACED:
 			pass
 	
+
+
+func _on_Control_gui_input(event):
+	if event is InputEventMouseButton:
+		if ui.selected_tile and ui.selected_tile.tile_name == "Delete":
+			queue_free()

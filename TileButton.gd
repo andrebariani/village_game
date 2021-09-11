@@ -3,9 +3,10 @@ class_name TileButton
 
 signal selected()
 
-export var tile_name = "Tile"
+onready var tile_name = self.name
 export(PackedScene) var building_file
 export var repeatable = false
+
 
 func _ready():
 	set_text(tile_name)

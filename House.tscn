@@ -6,7 +6,7 @@
 
 [sub_resource type="RectangleShape2D" id=1]
 resource_local_to_scene = true
-extents = Vector2( 4, 2 )
+extents = Vector2( 8, 6 )
 
 [node name="House" instance=ExtResource( 2 )]
 script = ExtResource( 3 )
@@ -19,3 +19,9 @@ position = Vector2( 0, 2 )
 
 [node name="CollisionShape2D" parent="Area2D" index="0"]
 shape = SubResource( 1 )
+
+[node name="Control" parent="." index="2"]
+margin_left = -8.0
+margin_top = -8.0
+margin_right = 8.0
+margin_bottom = 8.0

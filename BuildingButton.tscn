@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://House.tscn" type="PackedScene" id=1]
+[ext_resource path="res://TileButton.gd" type="Script" id=2]
+
+[node name="Button" type="Button"]
+margin_right = 40.0
+margin_bottom = 20.0
+mouse_filter = 1
+toggle_mode = true
+text = "road"
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+tile_name = "House"
+building_file = ExtResource( 1 )
+repeatable = true

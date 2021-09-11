@@ -5,9 +5,11 @@
 
 [sub_resource type="RectangleShape2D" id=1]
 resource_local_to_scene = true
-extents = Vector2( 6, 4 )
+extents = Vector2( 14, 12 )
 
 [node name="Tavern" instance=ExtResource( 1 )]
+title = "Tavern"
+desc = "A place to gather."
 
 [node name="Sprite" parent="." index="0"]
 texture = ExtResource( 2 )
@@ -18,3 +20,9 @@ position = Vector2( -2, 4 )
 
 [node name="CollisionShape2D" parent="Area2D" index="0"]
 shape = SubResource( 1 )
+
+[node name="Control" parent="." index="2"]
+margin_left = -16.0
+margin_top = -8.0
+margin_right = 12.0
+margin_bottom = 16.0

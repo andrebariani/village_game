@@ -5,7 +5,7 @@
 
 [sub_resource type="RectangleShape2D" id=1]
 resource_local_to_scene = true
-extents = Vector2( 7, 7 )
+extents = Vector2( 16, 16 )
 
 [node name="Mine" instance=ExtResource( 1 )]
 

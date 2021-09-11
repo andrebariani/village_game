@@ -1,6 +1,7 @@
 extends Control
 
-onready var checkboxes = $GridContainer
+onready var tooltip = $HBoxContainer/BuildingToolTip
+onready var checkboxes = $HBoxContainer/GridContainer
 onready var buildingMap = get_node("/root/Node2D/Buildings")
 onready var roadMap = get_node("/root/Node2D/Roads")
 
@@ -28,16 +29,33 @@ func _process(_delta):
 				roadMap.update_bitmask_area(clicked_cell)
 
 
+func _on_button_mouse_in(tile):
+	tooltip.visible = true
+	tooltip.set_tooltip(tile)
+
+
+func _on_button_mouse_out(tile):
+	tooltip.visible = false
+
+
 func _on_button_selected(tile):
 	selected_tile = tile
-	if tile.tile_name == 'Road':
+	if tile.tile_name == 'Road' or tile.tile_name == 'Delete':
 		return
 	var instanced_file = tile.building_file.instance()
 	buildingMap.add_child(instanced_file)
-	instanced_file.connect("placed", self, "_on_tile_placed")
+	instanced_file.connect("placed", self, "_on_tile_placed", [tile])
 	
 	
-func _on_tile_placed():
+func _on_tile_placed(tile):
 	if not selected_tile.repeatable:
 		self.selected_tile.pressed = false
 		self.selected_tile = null
+
+
+func _on_GridContainer_mouse_entered():
+	print_debug("hi")
+
+
+func _on_GridContainer_mouse_exited():
+	print_debug("bye")
