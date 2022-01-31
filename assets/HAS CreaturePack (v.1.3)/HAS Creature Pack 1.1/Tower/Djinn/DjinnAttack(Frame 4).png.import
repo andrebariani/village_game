@@ -1,0 +1,34 @@
+[remap]
+
+importer="texture"
+type="StreamTexture"
+path="res://.import/DjinnAttack(Frame 4).png-cd83bf0cf2c13eea47516d50d64a006b.stex"
+metadata={
+"vram_texture": false
+}
+
+[deps]
+
+source_file="res://assets/HAS CreaturePack (v.1.3)/HAS Creature Pack 1.1/Tower/Djinn/DjinnAttack(Frame 4).png"
+dest_files=[ "res://.import/DjinnAttack(Frame 4).png-cd83bf0cf2c13eea47516d50d64a006b.stex" ]
+
+[params]
+
+compress/mode=0
+compress/lossy_quality=0.7
+compress/hdr_mode=0
+compress/bptc_ldr=0
+compress/normal_map=0
+flags/repeat=0
+flags/filter=false
+flags/mipmaps=false
+flags/anisotropic=false
+flags/srgb=2
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/HDR_as_SRGB=false
+process/invert_color=false
+stream=false
+size_limit=0
+detect_3d=false
+svg/scale=1.0

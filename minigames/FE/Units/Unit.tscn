@@ -1,0 +1,115 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://minigames/FE/Units/Unit.gd" type="Script" id=1]
+[ext_resource path="res://assets/HAS CreaturePack (v.1.3)/HAS Creature Pack 1.1/Castle/Archer/IconArcher.png" type="Texture" id=2]
+[ext_resource path="res://assets/HAS CreaturePack (v.1.3)/HAS Creature Pack 1.1/Castle/Castle(AllFrame).png" type="Texture" id=3]
+[ext_resource path="res://icon.png" type="Texture" id=4]
+[ext_resource path="res://minigames/FE/Units/Player.gd" type="Script" id=5]
+[ext_resource path="res://minigames/FE/Units/Hostile.gd" type="Script" id=6]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 4, 4 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "attack"
+
+[sub_resource type="Animation" id=3]
+length = 0.8
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3 ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "move"
+length = 0.8
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 4, 5, 6, 7 ]
+}
+
+[node name="Unit" type="Area2D"]
+script = ExtResource( 1 )
+
+[node name="tile_preview" type="Sprite" parent="."]
+visible = false
+self_modulate = Color( 0, 0, 0, 1 )
+scale = Vector2( 0.125, 0.125 )
+texture = ExtResource( 4 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0, -4 )
+texture = ExtResource( 3 )
+hframes = 4
+vframes = 5
+frame = 7
+region_enabled = true
+region_rect = Rect2( 0, 0, 64, 80 )
+
+[node name="Icon" type="Sprite" parent="."]
+visible = false
+texture = ExtResource( 2 )
+
+[node name="Inventory" type="Node2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="anim" type="AnimationPlayer" parent="."]
+autoplay = "idle"
+anims/attack = SubResource( 2 )
+anims/idle = SubResource( 3 )
+anims/move = SubResource( 4 )
+
+[node name="ActMenu" type="VBoxContainer" parent="."]
+visible = false
+margin_left = 8.0
+margin_top = -52.0
+margin_right = 64.0
+margin_bottom = -12.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Attack" type="Button" parent="ActMenu"]
+margin_right = 56.0
+margin_bottom = 19.0
+text = "Attack"
+
+[node name="Wait" type="Button" parent="ActMenu"]
+margin_top = 23.0
+margin_right = 56.0
+margin_bottom = 42.0
+text = "Wait"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AI" type="Node" parent="."]
+
+[node name="Player" type="Node" parent="AI"]
+script = ExtResource( 5 )
+
+[node name="Hostile" type="Node" parent="AI"]
+script = ExtResource( 6 )
+
+[connection signal="button_up" from="ActMenu/Attack" to="." method="_on_Attack_button_up"]
+[connection signal="button_up" from="ActMenu/Wait" to="." method="_on_Wait_button_up"]

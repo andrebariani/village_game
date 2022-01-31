@@ -17,6 +17,7 @@ enum MODE {
 }
 var mode = MODE.PREVIEW
 
+var tile = Vector2.ZERO
 
 func _ready():
 	$Area2D/CollisionShape2D.shape.extents -= Vector2(1,1) 
@@ -33,6 +34,7 @@ func _process(_delta):
 				if Input.is_action_just_pressed("ui_accept"):
 					emit_signal("placed")
 					mode = MODE.PLACED
+					tile = map.world_to_map(get_global_mouse_position())
 		MODE.PLACED:
 			pass
 	

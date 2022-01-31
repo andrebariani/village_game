@@ -31,7 +31,7 @@ __meta__ = {
 }
 
 [node name="GridContainer" type="GridContainer" parent="HBoxContainer"]
-margin_right = 40.0
+margin_right = 31.0
 margin_bottom = 224.0
 theme = SubResource( 1 )
 __meta__ = {
@@ -39,29 +39,35 @@ __meta__ = {
 }
 
 [node name="House" parent="HBoxContainer/GridContainer" instance=ExtResource( 1 )]
+margin_right = 31.0
+margin_bottom = 19.0
 repeatable = false
 
 [node name="Mine" parent="HBoxContainer/GridContainer" instance=ExtResource( 1 )]
-margin_top = 24.0
-margin_bottom = 44.0
+margin_top = 23.0
+margin_right = 31.0
+margin_bottom = 42.0
 building_file = ExtResource( 5 )
 repeatable = false
 
 [node name="Tavern" parent="HBoxContainer/GridContainer" instance=ExtResource( 1 )]
-margin_top = 48.0
-margin_bottom = 68.0
+margin_top = 46.0
+margin_right = 31.0
+margin_bottom = 65.0
 building_file = ExtResource( 4 )
 repeatable = false
 
 [node name="Road" parent="HBoxContainer/GridContainer" instance=ExtResource( 1 )]
-margin_top = 72.0
-margin_bottom = 92.0
+margin_top = 69.0
+margin_right = 31.0
+margin_bottom = 88.0
 building_file = null
 repeatable = false
 
 [node name="Delete" parent="HBoxContainer/GridContainer" instance=ExtResource( 1 )]
-margin_top = 96.0
-margin_bottom = 116.0
+margin_top = 92.0
+margin_right = 31.0
+margin_bottom = 111.0
 building_file = null
 repeatable = false
 

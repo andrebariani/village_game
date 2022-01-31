@@ -1,11 +1,11 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Building.tscn" type="PackedScene" id=1]
-[ext_resource path="res://assets/HAS Buildings Pack/CompilationBuilding/Compilation-Building32x32.png" type="Texture" id=2]
+[ext_resource path="res://assets/HAS Buildings Pack/CompilationBuilding/Compilation-Building_8.png" type="Texture" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
 resource_local_to_scene = true
-extents = Vector2( 14, 12 )
+extents = Vector2( 6, 4 )
 
 [node name="Tavern" instance=ExtResource( 1 )]
 title = "Tavern"
@@ -13,7 +13,7 @@ desc = "A place to gather."
 
 [node name="Sprite" parent="." index="0"]
 texture = ExtResource( 2 )
-region_rect = Rect2( 0, 160, 32, 32 )
+region_rect = Rect2( 0, 144, 16, 16 )
 
 [node name="Area2D" parent="." index="1"]
 position = Vector2( -2, 4 )

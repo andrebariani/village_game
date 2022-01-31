@@ -2,8 +2,8 @@ extends Control
 
 onready var tooltip = $HBoxContainer/BuildingToolTip
 onready var checkboxes = $HBoxContainer/GridContainer
-onready var buildingMap = get_node("/root/Node2D/Buildings")
-onready var roadMap = get_node("/root/Node2D/Roads")
+onready var buildingMap = get_node("/root/Proc/Buildings")
+onready var roadMap = get_node("/root/Proc/Roads")
 
 
 var selected_tile = null

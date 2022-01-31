@@ -13,6 +13,5 @@ script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-tile_name = "House"
 building_file = ExtResource( 1 )
 repeatable = true
