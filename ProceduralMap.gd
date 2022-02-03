@@ -152,38 +152,24 @@ func generate_rivers():
 	noise.octaves = layers.grass.octaves
 	noise.period = layers.grass.period
 	
-	for x in layers.mt.map_size.x:
-		for y in layers.mt.map_size.y:
-			if tilemapMountains.get_cellv(Vector2(x, y)) == 0:
-				if tilemapMountains.get_cellv(Vector2(x, y + 1)) == -1:
-					if (randi() % 100) < 25:
-						var mtPos = tilemapMountains.to_global(tilemapMountains.map_to_world(Vector2(x, y)))
-						var spring: Vector2 = tilemapGround.world_to_map(mtPos) + Vector2(4, 7)
-						tilemapGround.set_cellv(spring, 7)
-						spring += Vector2.DOWN
-						walker_river(spring)
-				elif tilemapMountains.get_cellv(Vector2(x, y - 1)) == -1:
-					if (randi() % 100) < 25:
-						var mtPos = tilemapMountains.to_global(tilemapMountains.map_to_world(Vector2(x, y)))
-						var spring: Vector2 = tilemapGround.world_to_map(mtPos) + Vector2(4, 0)
-						tilemapGround.set_cellv(spring, 7)
-						spring += Vector2.UP
-						walker_river(spring)
-				elif tilemapMountains.get_cellv(Vector2(x + 1, y)) == -1:
-					if (randi() % 100) < 25:
-						var mtPos = tilemapMountains.to_global(tilemapMountains.map_to_world(Vector2(x, y)))
-						var spring: Vector2 = tilemapGround.world_to_map(mtPos) + Vector2(7, 4)
-						tilemapGround.set_cellv(spring, 7)
-						spring += Vector2.RIGHT
-						walker_river(spring)
-				elif tilemapMountains.get_cellv(Vector2(x - 1, y)) == -1:
-					if (randi() % 100) < 25:
-						var mtPos = tilemapMountains.to_global(tilemapMountains.map_to_world(Vector2(x, y)))
-						var spring: Vector2 = tilemapGround.world_to_map(mtPos) + Vector2(0, 4)
-						tilemapGround.set_cellv(spring, 7)
-						spring += Vector2.LEFT
-						walker_river(spring)
-						
+	var spring_relative_pos = [
+			{dir = Vector2.DOWN, pos = Vector2(4, 7)},
+			{dir = Vector2.LEFT, pos = Vector2(0, 4)},
+			{dir = Vector2.RIGHT, pos = Vector2(7, 4)},
+			{dir = Vector2.UP, pos = Vector2(4, 0)}
+		]
+	
+	for mt in tilemapMountains.get_used_cells_by_id(0):
+		for z in spring_relative_pos:
+			if tilemapMountains.get_cellv(mt + z.dir) == -1:
+				if (randi() % 100) < 25:
+					var mtPos = tilemapMountains.to_global(tilemapMountains.map_to_world(mt))
+					var spring: Vector2 = tilemapGround.world_to_map(mtPos) + z.pos
+					tilemapGround.set_cellv(spring, 7)
+					spring += z.dir
+					walker_river(spring)
+					break
+				
 	var river_cells = tilemapRoads.get_used_cells_by_id(3)
 	for r in river_cells:
 		tilemapGround.set_cellv(r, 7)
@@ -195,34 +181,34 @@ func generate_single_river(mt):
 	var x = mt.x
 	var y = mt.y
 	if tilemapMountains.get_cellv(Vector2(x, y)) == 0:
-				if tilemapMountains.get_cellv(Vector2(x, y + 1)) == -1:
-					if (randi() % 100) < 25:
-						var mtPos = tilemapMountains.to_global(tilemapMountains.map_to_world(Vector2(x, y)))
-						var spring: Vector2 = tilemapRoads.world_to_map(mtPos) + Vector2(4, 7)
-						tilemapRoads.set_cellv(spring, 3)
-						spring += Vector2.DOWN
-						walker_river(spring)
-				elif tilemapMountains.get_cellv(Vector2(x, y - 1)) == -1:
-					if (randi() % 100) < 25:
-						var mtPos = tilemapMountains.to_global(tilemapMountains.map_to_world(Vector2(x, y)))
-						var spring: Vector2 = tilemapRoads.world_to_map(mtPos) + Vector2(4, 0)
-						tilemapRoads.set_cellv(spring, 3)
-						spring += Vector2.UP
-						walker_river(spring)
-				elif tilemapMountains.get_cellv(Vector2(x + 1, y)) == -1:
-					if (randi() % 100) < 25:
-						var mtPos = tilemapMountains.to_global(tilemapMountains.map_to_world(Vector2(x, y)))
-						var spring: Vector2 = tilemapRoads.world_to_map(mtPos) + Vector2(7, 4)
-						tilemapRoads.set_cellv(spring, 3)
-						spring += Vector2.RIGHT
-						walker_river(spring)
-				elif tilemapMountains.get_cellv(Vector2(x - 1, y)) == -1:
-					if (randi() % 100) < 25:
-						var mtPos = tilemapMountains.to_global(tilemapMountains.map_to_world(Vector2(x, y)))
-						var spring: Vector2 = tilemapRoads.world_to_map(mtPos) + Vector2(0, 4)
-						tilemapRoads.set_cellv(spring, 3)
-						spring += Vector2.LEFT
-						walker_river(spring)
+		if tilemapMountains.get_cellv(Vector2(x, y + 1)) == -1:
+			if (randi() % 100) < 25:
+				var mtPos = tilemapMountains.to_global(tilemapMountains.map_to_world(Vector2(x, y)))
+				var spring: Vector2 = tilemapRoads.world_to_map(mtPos) + Vector2(4, 7)
+				tilemapRoads.set_cellv(spring, 3)
+				spring += Vector2.DOWN
+				walker_river(spring)
+		elif tilemapMountains.get_cellv(Vector2(x, y - 1)) == -1:
+			if (randi() % 100) < 25:
+				var mtPos = tilemapMountains.to_global(tilemapMountains.map_to_world(Vector2(x, y)))
+				var spring: Vector2 = tilemapRoads.world_to_map(mtPos) + Vector2(4, 0)
+				tilemapRoads.set_cellv(spring, 3)
+				spring += Vector2.UP
+				walker_river(spring)
+		elif tilemapMountains.get_cellv(Vector2(x + 1, y)) == -1:
+			if (randi() % 100) < 25:
+				var mtPos = tilemapMountains.to_global(tilemapMountains.map_to_world(Vector2(x, y)))
+				var spring: Vector2 = tilemapRoads.world_to_map(mtPos) + Vector2(7, 4)
+				tilemapRoads.set_cellv(spring, 3)
+				spring += Vector2.RIGHT
+				walker_river(spring)
+		elif tilemapMountains.get_cellv(Vector2(x - 1, y)) == -1:
+			if (randi() % 100) < 25:
+				var mtPos = tilemapMountains.to_global(tilemapMountains.map_to_world(Vector2(x, y)))
+				var spring: Vector2 = tilemapRoads.world_to_map(mtPos) + Vector2(0, 4)
+				tilemapRoads.set_cellv(spring, 3)
+				spring += Vector2.LEFT
+				walker_river(spring)
 
 
 class cellSorter:
@@ -248,7 +234,7 @@ func walker_river(spring):
 				[noise.get_noise_2dv(spring + Vector2.LEFT), spring + Vector2.LEFT],
 				[noise.get_noise_2dv(spring + Vector2.RIGHT), spring + Vector2.RIGHT],
 				[noise.get_noise_2dv(spring + Vector2.UP), spring + Vector2.UP]
-				]
+			]
 		adj_cells.sort_custom(cellSorter, "sort_noise")
 		while !adj_cells.empty():
 			var adj = adj_cells.front()
