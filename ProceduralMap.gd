@@ -70,17 +70,21 @@ func _ready():
 
 
 func generate_map():
-	generate_mountains()
-	generate_grass()
-	generate_islands()
+	tilemapMountains.clear()
+	tilemapGround.clear()
+	
+	for x in layers.grass.map_size.x:
+		for y in layers.grass.map_size.y:
+			tilemapGround.set_cellv(Vector2(x,y), 7)
+			tilemapGround.update_bitmask_area(Vector2(x,y))
+			
+	generate_cell(tilemapMountains, layers.mt, 0)
+	generate_cell(tilemapGround, layers.grass, 8)
+	generate_cell(tilemapGround, layers.island, 8)
 	generate_rivers()
 	generate_trees()
 
-
-func generate_mountains():
-	tilemapMountains.clear()
-	var layer = layers.mt
-	
+func generate_cell(tilemap, layer, cell_id):
 	var n = noise if layer.use_same_noise else layer.noise
 	
 	n.octaves = layer.octaves
@@ -90,62 +94,16 @@ func generate_mountains():
 	
 	for x in layer.map_size.x:
 		for y in layer.map_size.y:
-			var n_cell = n.get_noise_2d(x, y)
-			#tilemapGround.set_cellv(Vector2(x,y), 2)
-			if layer.cap_op:
-				if n_cell > layer.cap:
-					tilemapMountains.set_cellv(Vector2(x,y), 0)
-			else:
-				if n_cell < layer.cap:
-					tilemapMountains.set_cellv(Vector2(x,y), 0)
-			#tilemapGround.update_bitmask_area(Vector2(x,y))
-
-
-func generate_grass():
-	tilemapGround.clear()
-	var layer = layers.grass
-	
-	var n = noise if layer.use_same_noise else layer.noise
-	
-	n.octaves = layer.octaves
-	n.period = layer.period
-	
-	print_debug(n.octaves, " / ", n.period)
-	
-	for x in layer.map_size.x:
-		for y in layer.map_size.y:
-			var n_cell = n.get_noise_2d(x, y)
-			tilemapGround.set_cellv(Vector2(x,y), 7)
-			if layer.cap_op:
-				if n_cell > layer.cap:
-					tilemapGround.set_cellv(Vector2(x,y), 8)
-			else:
-				if n_cell < layer.cap:
-					tilemapGround.set_cellv(Vector2(x,y), 8)
-			tilemapGround.update_bitmask_area(Vector2(x,y))
-
-
-func generate_islands():
-	# tilemapIslands.clear()
-	var layer = layers.island
-	
-	var n = noise if layer.use_same_noise else layer.noise
-	
-	n.octaves = layer.octaves
-	n.period = layer.period
-	
-	print_debug(n.octaves, " / ", n.period)
-	
-	for x in layer.map_size.x:
-		for y in layer.map_size.y:
+			var tile = Vector2(x, y)
 			var n_cell = n.get_noise_2d(x, y)
 			if layer.cap_op:
 				if n_cell > layer.cap:
-					tilemapGround.set_cellv(Vector2(x,y), 8)
+					tilemap.set_cellv(tile, cell_id)
 			else:
 				if n_cell < layer.cap:
-					tilemapGround.set_cellv(Vector2(x,y), 8)
-			tilemapGround.update_bitmask_area(Vector2(x,y))
+					tilemap.set_cellv(tile, cell_id)
+			tilemap.update_bitmask_area(tile)
+
 
 
 func generate_rivers():
@@ -222,13 +180,21 @@ func flood_lowlands(cell, max_height):
 	pass
 
 
+func walker_river_2(spring):
+	var river = []
+	river.push_back([noise.get_noise_2dv(spring), spring])
+	while is_valid_river_cell(spring):
+		pass
+	pass
+
+
 func walker_river(spring):
 	var river = []
 	while is_valid_river_cell(spring):
 		river.push_back([noise.get_noise_2dv(spring), spring])
 		tilemapRoads.set_cellv(spring, 3)
 		tilemapGround.set_cellv(spring, -1)
-		# yield(get_tree(), "idle_frame")
+		yield(get_tree(), "idle_frame")
 		var adj_cells = [
 				[noise.get_noise_2dv(spring + Vector2.DOWN), spring + Vector2.DOWN],
 				[noise.get_noise_2dv(spring + Vector2.LEFT), spring + Vector2.LEFT],
@@ -241,13 +207,14 @@ func walker_river(spring):
 			var world_pos = tilemapRoads.to_global(tilemapRoads.map_to_world(adj[1]))
 			var mountain = tilemapMountains.world_to_map(world_pos)
 			if tilemapRoads.get_cellv(adj[1]) != 3 and  \
-				tilemapMountains.get_cellv(mountain) != 0:
+				tilemapMountains.get_cellv(mountain) != 0 and  \
+				tilemapGround.get_cellv(spring) != -1:
 				spring = adj[1]
 				break
 			adj_cells.pop_front()
 	
 	# print_debug(river)
-	river.sort_custom(cellSorter, "sort_noise")
+	# river.sort_custom(cellSorter, "sort_noise")
 	return
 	
 	for i in range(1, river.size()):
@@ -350,12 +317,12 @@ func toggle_zoom():
 
 func _on_GrassButton_pressed():
 	_set_values("grass")
-	generate_grass()
+	generate_cell(tilemapGround, layers.grass, 8)
 
 
 func _on_MtButton_pressed():
 	_set_values("mt")
-	generate_mountains()
+	generate_cell(tilemapMountains, layers.mt, 0)
 
 
 func _set_values(key: String):
@@ -381,7 +348,7 @@ func _on_grasscap_pressed():
 	layers.grass.cap_op = !layers.grass.cap_op
 	var op = ">" if layers.grass.cap_op else "<"
 	grasscapOpBt.set_text(op)
-	generate_grass()
+	generate_cell(tilemapGround, layers.grass, 8)
 
 
 func _on_Clear_pressed():
@@ -390,7 +357,7 @@ func _on_Clear_pressed():
 
 func _on_mtButton_pressed():
 	_set_values("mt")
-	generate_mountains()
+	generate_cell(tilemapMountains, layers.mt, 0)
 
 
 func _on_mtClear_pressed():
@@ -401,19 +368,19 @@ func _on_mtcap_pressed():
 	layers.mt.cap_op = !layers.mt.cap_op
 	var op = ">" if layers.mt.cap_op else "<"
 	mtcapOpBt.set_text(op)
-	generate_mountains()
+	generate_cell(tilemapMountains, layers.mt, 0)
 
 
 func _on_islandcap_pressed():
 	layers.island.cap_op = !layers.island.cap_op
 	var op = ">" if layers.island.cap_op else "<"
 	islandcapOpBt.set_text(op)
-	generate_islands()
+	generate_cell(tilemapGround, layers.island, 8)
 
 
 func _on_IslandButton_pressed():
 	_set_values("island")
-	generate_islands()
+	generate_cell(tilemapGround, layers.island, 8)
 
 
 func _on_IslandClear_pressed():
